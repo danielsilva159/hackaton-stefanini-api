@@ -107,7 +107,7 @@ public class PessoaServico implements Serializable {
 	 * Buscar uma Pessoa pelo ID
 	 */
 //	@Override
-	public Optional<TypedQuery<Pessoa>> encontrarPessoas(Long id) {
+	public Optional<Pessoa> encontrarPessoas(Long id) {
 		
 		return dao.encontrarPessoa(id);
 	}

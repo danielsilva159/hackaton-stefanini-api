@@ -159,10 +159,9 @@ public class PessoaDao extends GenericDao<Pessoa, Long> {
 		return q2.getResultStream().findFirst();
 	}
 	
-	public Optional<TypedQuery<Pessoa>> encontrarPessoa(Long id) {
-		return Optional.of(getEntityManager().createQuery(
-				"select distinct p from Pessoa p left join fetch p.enderecos  where p.id = p.enderecos.id" 
-				, Pessoa.class));
+	public Optional<Pessoa> encontrarPessoa(Long id) {
+		TypedQuery<Pessoa>q1 = getEntityManager().createQuery("select  p from Pessoa p  LEFT JOIN FETCH p.perfils LEFT JOIN FETCH p.enderecos  where p.id= "+id , Pessoa.class);
+		return q1.getResultStream().findFirst();
 	}
 	
 
