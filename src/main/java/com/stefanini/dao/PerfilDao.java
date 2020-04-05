@@ -3,8 +3,11 @@ package com.stefanini.dao;
 import com.stefanini.dao.abstracao.GenericDao;
 import com.stefanini.model.Perfil;
 import com.stefanini.model.Pessoa;
+import com.stefanini.model.PessoaPerfil;
 
 import javax.persistence.TypedQuery;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,5 +32,12 @@ public class PerfilDao extends GenericDao<Perfil, Long> {
 		q2.setParameter("nome", nome);
 		return q2.getResultStream().findFirst();
 	}
+	
+	//Eu que criei
+	/*public Optional<List<PessoaPerfil>> buscarPessoaEPerfil(){
+		TypedQuery<Perfil> q2 = entityManager.createQuery("select p from PessoaPerfil p",Pessoa.class);
+		
+		return q2.getResultStream();
+	}*/
 
 }

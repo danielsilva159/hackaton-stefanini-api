@@ -1,7 +1,13 @@
 package com.stefanini.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_endereco")
@@ -42,12 +48,14 @@ public class Endereco implements Serializable {
      * Unidirecional
      * Somente Pessoa acessa endereco
      */
+
+    /*@ManyToOne
+    @JoinColumn(name = "CO_SEQ_PESSOA")
+    private Long idPessoa;*/
+    
+    //@ManyToOne
     @Column(name = "CO_SEQ_PESSOA")
     private Long idPessoa;
-
-//    @ManyToOne
-//    @JoinColumn(name = "co_seq_pessoa", referencedColumnName = "co_seq_pessoa", nullable = false)
-//    private Pessoa pessoa;
 
 
     public Endereco() {
@@ -113,7 +121,7 @@ public class Endereco implements Serializable {
         return idPessoa;
     }
 
-    public void setIdPessoa(Long idPessoa) {
+    public void setPessoa(Long idPessoa) {
         this.idPessoa = idPessoa;
     }
 

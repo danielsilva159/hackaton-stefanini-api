@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -44,8 +46,22 @@ public class PerfilResource {
     public Response obterPerfils() {
         log.info("Obtendo lista de perfils");
         MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-        Optional<List<Perfil>> listPessoa = perfilServico.getList();
+       Optional<List<Perfil>> listPessoa = perfilServico.getList();
+       
+       Optional<Optional<List<Perfil>>> retorno = Optional.ofNullable(perfilServico.getList());
+        System.out.println(listPessoa.get().get(0).getDataHoraAlteracao());
         return listPessoa.map(perfils -> Response.ok(perfils).build()).orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
+     //     return Optional(List(retorno));
+       // List<Perfil> perfil = perfilServico.getList();
+      /*  for(int i = 0; i<= perfil.size();i++) {
+        if(perfil.get(i).getDataHoraAlteracao() == null) {
+        	perfil.get(i).setDataHoraAlteracao(LocalDateTime.now());
+        	perfilServico.atualizar(perfil.get(i));
+        	}
+        }
+        System.out.println(perfil);
+        return perfil;
+    */
     }
 
     /**

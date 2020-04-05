@@ -2,12 +2,15 @@ package com.stefanini.servico;
 
 import com.stefanini.dao.PessoaDao;
 import com.stefanini.exception.NegocioException;
+import com.stefanini.model.Endereco;
 import com.stefanini.model.Pessoa;
 
 import javax.ejb.*;
 import javax.inject.Inject;
+import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -35,13 +38,28 @@ public class PessoaServico implements Serializable {
 
 	@Inject
 	private PessoaPerfilServico pessoaPerfilServico;
+	
+	@Inject
+	private EnderecoServico enderecoServico;
 
 	/**
 	 * Salvar os dados de uma Pessoa
 	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Pessoa salvar(@Valid Pessoa pessoa) {
-		return dao.salvar(pessoa);
+		
+		Pessoa pessoaSalva = dao.salvar(pessoa);
+		 
+		List<Endereco> enderecos = new ArrayList<>();
+		
+		 for (Endereco enderecoSalvo : enderecos) {
+
+				enderecoSalvo.setPessoa(pessoaSalva.getId()); 
+				
+				enderecoServico.salvar(enderecoSalvo);
+				
+				}
+		 return pessoaSalva;
 	}
 	/**
 	 * Validando se existe pessoa com email
@@ -80,6 +98,7 @@ public class PessoaServico implements Serializable {
 	/**
 	 * Buscar uma lista de Pessoa
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Optional<List<Pessoa>> getList() {
 		return dao.getList();
 	}
@@ -88,8 +107,13 @@ public class PessoaServico implements Serializable {
 	 * Buscar uma Pessoa pelo ID
 	 */
 //	@Override
-	public Optional<Pessoa> encontrar(Long id) {
-		return dao.encontrar(id);
+	public Optional<TypedQuery<Pessoa>> encontrarPessoas(Long id) {
+		
+		return dao.encontrarPessoa(id);
+	}
+	
+	public Optional<List<Pessoa>> ListaPessoas(){
+		return dao.pessoasCompletos();
 	}
 
 }

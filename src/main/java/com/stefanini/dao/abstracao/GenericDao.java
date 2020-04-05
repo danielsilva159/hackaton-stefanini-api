@@ -70,7 +70,7 @@ public abstract class GenericDao<T, I extends Serializable> implements IGenericD
 		CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<T> query = builder.createQuery(classe);
 		query.from(classe);
-		return Optional.of(getEntityManager().createQuery(query).getResultList());
+		return Optional.ofNullable(getEntityManager().createQuery(query).getResultList());
 	}
 	/**
 	 * Não precisa de Transacao para efetuar DQL

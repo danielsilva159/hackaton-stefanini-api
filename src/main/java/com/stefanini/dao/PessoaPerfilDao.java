@@ -1,9 +1,20 @@
 package com.stefanini.dao;
 
 import com.stefanini.dao.abstracao.GenericDao;
+import com.stefanini.model.Endereco;
+import com.stefanini.model.Pessoa;
 import com.stefanini.model.PessoaPerfil;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -22,6 +33,7 @@ public class PessoaPerfilDao extends GenericDao<PessoaPerfil, Long> {
 	 * @param
 	 * @return
 	 */
+	
 	public Stream<PessoaPerfil> buscarPessoaPerfil(Long idPessoa, Long idPerfil){
 		String query = "select * from TB_PESSOA_PERFIL p where 1=1 ";
 		if(idPessoa!= null){
@@ -40,5 +52,12 @@ public class PessoaPerfilDao extends GenericDao<PessoaPerfil, Long> {
 		}
 		return q2.getResultStream();
 	}
+	
+/*	public Optional<List<PessoaPerfil>>  buscarPessoasPerfis(){
+		String query = "select * from TB_PESSOA_PERFIL";
+		
+		return Optional.ofNullable(getEntityManager().createQuery(query).getResultList());
+	}*/
+	
 
 }

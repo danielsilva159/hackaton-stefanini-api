@@ -43,6 +43,7 @@ public class PerfilServico implements Serializable {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Perfil salvar(@Valid Perfil perfil) {
+		
 		return dao.salvar(perfil);
 	}
 

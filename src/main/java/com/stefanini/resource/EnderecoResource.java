@@ -3,6 +3,8 @@ package com.stefanini.resource;
 import com.stefanini.dto.SucessoDto;
 import com.stefanini.model.Endereco;
 import com.stefanini.servico.EnderecoServico;
+import com.stefanini.viaCEP.ViaCEP;
+import com.stefanini.viaCEP.ViaCEPException;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -58,7 +60,7 @@ public class EnderecoResource {
 
     /**
      *
-     * @param endereco
+     * @param enderecode
      * @return
      */
     @PUT
@@ -94,5 +96,35 @@ public class EnderecoResource {
     public Response obterEndereco(@PathParam("id") Long id) {
         return enderecoServico.encontrar(id).map(endereco -> Response.ok(endereco).build()).orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
     }
+    @GET
+    @Path("cep/{cep}")
+    public Endereco obterEnderecoCep(@PathParam("cep") String cep) {
+    	Endereco endereco = new Endereco();
+    	try {
+    		
+			ViaCEP viaCep = new ViaCEP(cep);
+			
+			endereco.setCep(cep);
+			endereco.setBairro(viaCep.getBairro());
+			endereco.setLocalidade(viaCep.getLocalidade());
+			endereco.setLogradouro(viaCep.getLogradouro());
+			endereco.setComplemento(viaCep.getComplemento());
+			endereco.setUf(viaCep.getUf());
+			
+		} catch (ViaCEPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return endereco;
+    }
+    
+    @GET
+	@Path("pessoa/{id}")
+	public List<Endereco> buscarEnderecosPessoa(@PathParam("id") Long id) {
+		 List<Endereco> endereco = enderecoServico.ListEnderecosPessoa(id);
+		 return endereco;
+		
+	}
 
 }

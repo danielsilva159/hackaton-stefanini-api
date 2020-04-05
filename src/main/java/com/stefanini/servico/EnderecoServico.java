@@ -26,7 +26,6 @@ public class EnderecoServico implements Serializable {
 
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-
 	public Endereco salvar(@Valid Endereco entity) {
 		return dao.salvar(entity);
 	}
@@ -50,5 +49,8 @@ public class EnderecoServico implements Serializable {
 
 	public Optional<Endereco> encontrar(Long id) {
 		return dao.encontrar(id);
+	}
+	public List<Endereco>ListEnderecosPessoa(Long idPessoa){
+		return dao.ListEnderecosPessoa(idPessoa);
 	}
 }
